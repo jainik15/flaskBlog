@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Jainik's Blog{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-text: #212529;
+            --secondary-text: #6c757d;
+            --background-color: #f8f9fa;
+            --accent-color: #007bff; /* A professional blue */
+            --border-color: #dee2e6;
+            --card-background: #ffffff;
+            --font-family-sans: 'Inter', sans-serif;
+            --font-family-serif: 'Lora', serif;
+        }
+
+        body {
+            font-family: var(--font-family-sans);
+            background-color: var(--background-color);
+            color: var(--primary-text);
+            margin: 0;
+            padding-top: 80px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--card-background);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-text);
+            text-decoration: none;
+        }
+
+        .nav-link.cta {
+            background-color: var(--accent-color);
+            color: #fff;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            transition: background-color 0.2s ease-in-out;
+        }
+        
+        .nav-link.cta:hover {
+            background-color: #0056b3;
+        }
+
+        .container {
+            max-width: 840px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            font-weight: 500;
+            text-align: center;
+        }
+        .alert-success {
+            color: #0f5132;
+            background-color: #d1e7dd;
+            border-color: #badbcc;
+        }
+        .alert-danger {
+            color: #842029;
+            background-color: #f8d7da;
+            border-color: #f5c2c7;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{{ url_for('home') }}" class="navbar-brand">Jainik's blog</a>
+        <div class="navbar-nav">
+            <a href="{{ url_for('add_post') }}" class="nav-link cta">+ New Post</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+</html>

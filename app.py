@@ -25,7 +25,7 @@ def home():
 
 @app.route('/add', methods=['GET', 'POST'])
 def add_post():
-    if request.method == "POST":
+    if request.method == 'POST':
         post_title = request.form['title']
         post_content  = request.form['content']
         post_author = request.form['author']
@@ -52,5 +52,23 @@ def delete_post(post_id):
         flash('Unexpected error occured, could not delete post!', 'danger')
     return redirect(url_for('home'))
     
+@app.route('/edit/<int:post_id>' , methods=['GET','POST'])
+def edit_post(post_id):
+    post_to_edit = Post.query.get_or_404(post_id)
+
+    if request.method == 'POST':
+        post_to_edit.title = request.form['title']
+        post_to_edit.content = request.form['content']
+        post_to_edit.author = request.form['author']
+
+        try:
+            db.session.commit()
+            flash('Post updated successfully', 'success')
+            return redirect(url_for('home'))
+        except:
+            flash('A unexpected error occured!', 'danger')
+            return redirect(url_for('home'))
+    return render_template('edit_post.html',post=post_to_edit)
+
 if __name__=="__main__":
     app.run(debug=True)
