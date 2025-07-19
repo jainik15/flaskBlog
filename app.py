@@ -39,6 +39,18 @@ def add_post():
         return redirect(url_for('home'))
 
     return render_template('add_post.html')
+
+@app.route('/delete/<int:post_id>', methods=['POST'])
+def delete_post(post_id):
+    post_to_delete = Post.query.get_or_404(post_id)
+
+    try:
+        db.session.delete(post_to_delete)
+        db.session.commit()
+        flash('Post deleted successfully!', 'success')
+    except:
+        flash('Unexpected error occured, could not delete post!', 'danger')
+    return redirect(url_for('home'))
     
 if __name__=="__main__":
     app.run(debug=True)
