@@ -1,11 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'a_secret_super_key_that_should_be_changed'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir,'blog.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -25,7 +24,7 @@ def home():
 
 @app.route('/add', methods=['GET', 'POST'])
 def add_post():
-    if request.method == "POST":
+    if request.method == "Post":
         post_title = request.form['title']
         post_content  = request.form['content']
         post_author = request.form['author']
@@ -35,7 +34,6 @@ def add_post():
         db.session.add(new_post)
         db.session.commit()
 
-        flash('Blog Post Created Successfully', 'success')
         return redirect(url_for('home'))
 
     return render_template('add_post.html')

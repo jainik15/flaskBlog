@@ -25,32 +25,67 @@
         h1 {
             color: #0056b3;
         }
-        .posts {
+        .post {
             border-bottom: 1px solid #eee;
             padding: 20px 0;
         }
-        .posts:last-child {
+        .post:last-child {
             border-bottom: None;
         }
-        .posts h2 {
+        .post h2 {
             margin-top: 20px;
             color: #333;
         }
-        .posts-meta {
+        .post-meta {
             font-size: 0.9em;
             color: #666;
             margin-bottom: 10px;
+        }
+        /* Add this CSS to the <style> block in templates/index.html */
+        .add-post-btn {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }       
+        .add-post-btn:hover {
+            background-color: #218838;
+        }
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>The Flask Blog</h1>
+        {% with messages= get_flashed_messages(with_categories=True)%}
+            {% if messages %}
+                {% for category, message in messages%}
+                    <div class="alert alert-{{category}}">
+                    {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <a href="{{url_for('add_post')}}" class="add-post-btn"> + Add new post </a>
         {% for post in posts%}
-            <div class="posts">
+            <div class="post">
                 <h2>{{post.title}}</h2>
                 <p class="post-meta">{{post.author}}</p>
-                <p>{{post.content}}</post></p>
+                <p>{{post.content}}</p>
             </div>
         {% endfor %}
     </div>
